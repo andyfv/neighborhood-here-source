@@ -14,6 +14,12 @@ The **Neighborhood-Here** project is Map app written in React and Redux. You can
 
 ## How to run it
 
+####[Open the App Link](https://andyfv.github.io/neighborhood-map-here/)
+
+<br>
+
+```Or download/clone locally:```
+
 1) Download or Clone the repository
 2) Unzip the file if you have downloaded a ZIP
 3) Install dependencies using **npm**:
