@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './styles/SearchBar.css';
-import { fetchPlaces, clearQuery } from '../actions/searchActions';
+import { updateQuery, fetchPlaces, clearQuery } from '../actions/searchActions';
 import { _debounce } from '../utils/debounce';
 
-const SearchBar = ({query, clearQuery, searchPlaces}) => {
+const SearchBar = ({query, clearQuery, searchPlaces, updateQuery}) => {
     let debounce = _debounce((query) => {this.handleQueryChange(query)}, 300);
     return ( 
         <form className = "search-bar" 
@@ -21,11 +21,13 @@ const SearchBar = ({query, clearQuery, searchPlaces}) => {
                     value = {query}
                     // onChange = {(e) => debounce(e.target.value)}
                     onChange = {(e) => {
-                        searchPlaces(e.target.value)}
+                        updateQuery(e.target.value)}
                         }
                     onKeyPress = { e =>  {
-                        if (e.key === 'Enter')
+                        if (e.key === 'Enter') {
                             e.preventDefault();
+                            searchPlaces(e.target.value);
+                        }
                     }}
                 />
                 <button id = "delete-button"
@@ -41,7 +43,8 @@ const SearchBar = ({query, clearQuery, searchPlaces}) => {
 SearchBar.propTypes = {
     query: PropTypes.string.isRequired,
     searchPlaces: PropTypes.func.isRequired,
-    clearQuery: PropTypes.func.isRequired
+    clearQuery: PropTypes.func.isRequired,
+    updateQuery: PropTypes.func.isRequired
 } 
 
 const mapStateToProps = (state) => {
@@ -52,7 +55,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     searchPlaces: fetchPlaces,
-    clearQuery: clearQuery
+    clearQuery: clearQuery,
+    updateQuery: updateQuery
 }
 
 export default connect(
