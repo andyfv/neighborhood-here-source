@@ -27,3 +27,10 @@ export function fetchPlaces(query, cat) {
                 dispatch(errorCaught(`Loading results failed: (${error})`)))
     }
 }
+
+export function clearQuery() {
+    return {
+        type: C.CLEAR_QUERY,
+        payload: ''
+    }
+}

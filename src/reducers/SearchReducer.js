@@ -18,6 +18,12 @@ export const searchReducer = (state = initialState, action) => {
                 results: action.payload,
                 fetching: false
             })
+            
+        case C.CLEAR_QUERY:
+            return Object.assign({}, state, {
+                query: ''
+            })    
+
         default:
             return state;
     }
