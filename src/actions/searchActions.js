@@ -19,7 +19,7 @@ export function fetchPlacesSucceeded(places) {
 
 export function fetchPlaces(query, cat) {
     return function (dispatch, getState) {
-        return Promise.resolve(dispatch(fetchPlacesStarted()))
+        return Promise.resolve(dispatch(fetchPlacesStarted(query)))
             .then(() => searchPlaces(query, cat))
             .then(results => 
                 Promise.resolve(dispatch(fetchPlacesSucceeded(results))))

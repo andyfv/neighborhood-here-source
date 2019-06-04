@@ -1,59 +1,58 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './styles/SearchBar.css';
-import { fetchPlaces } from '../actions/searchActions';
+import { fetchPlaces, clearQuery } from '../actions/searchActions';
 import { _debounce } from '../utils/debounce';
 
-class SearchBar extends Component {
-    state = {
-        query: this.props.defaultQuery
-    }
-    handleQueryChange = (query) => {
-        this.props.searchPlaces(query);
-    }
-
-    clearInput = () => {
-        this.setState({query: ''})
-    }
-
-    render() {
-        let debounce = _debounce((query) => {this.handleQueryChange(query)}, 300);
-        return ( 
-            <form className = "search-bar" role = "search" onSubmit={(e) => e.preventDefault()}>
-                <svg id = "search-icon" / >
-                <div className = "search-input-wrapper" >
-                    <input 
-                        className = "search-input"
-                        type = "text"
-                        aria-label = "search field"
-                        placeholder = "Search"
-                        value = {this.props.query}
-                        onChange = {(e) => debounce(e.target.value)}
-                    />
-                    <button id = "delete-button"
-                        aria-label = "clear search field"
-                        onClick = {this.clearInput}>
-                    </button>
-                </div>
-            </form>
-        )
-    }
+const SearchBar = ({query, clearQuery, searchPlaces}) => {
+    let debounce = _debounce((query) => {this.handleQueryChange(query)}, 300);
+    return ( 
+        <form className = "search-bar" 
+            role = "search" 
+            onSubmit={(e) => e.preventDefault()}>
+            <svg id = "search-icon" />
+            <div className = "search-input-wrapper" >
+                <input 
+                    className = "search-input"
+                    type = "text"
+                    aria-label = "search field"
+                    placeholder = "Search"
+                    value = {query}
+                    // onChange = {(e) => debounce(e.target.value)}
+                    onChange = {(e) => {
+                        searchPlaces(e.target.value)}
+                        }
+                    onKeyPress = { e =>  {
+                        if (e.key === 'Enter')
+                            e.preventDefault();
+                    }}
+                />
+                <button id = "delete-button"
+                    aria-label = "clear search field"
+                    onClick = {clearQuery}>
+                </button>
+            </div>
+        </form>
+    )
 }
 
+
 SearchBar.propTypes = {
-    defaultQuery: PropTypes.string.isRequired,
-    searchPlaces: PropTypes.func.isRequired
+    query: PropTypes.string.isRequired,
+    searchPlaces: PropTypes.func.isRequired,
+    clearQuery: PropTypes.func.isRequired
 } 
 
 const mapStateToProps = (state) => {
     return {
-        defaultQuery: state.search.defaultQuery
+        query: state.search.query
     }
 }
 
 const mapDispatchToProps = {
-    searchPlaces: fetchPlaces
+    searchPlaces: fetchPlaces,
+    clearQuery: clearQuery
 }
 
 export default connect(

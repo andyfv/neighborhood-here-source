@@ -19,7 +19,7 @@ class Map extends Component {
     // Initializing and fetching default results
     componentDidMount() {
         this.props.mapLoadAndInit(this.props.location)
-        .then(() => this.props.fetchPlaces())
+        .then(() => this.props.fetchPlaces(this.props.query))
         .then(() => this.onTapEventListener())
     }
 
@@ -43,7 +43,8 @@ const mapStateToProps = (state) => {
     return {
         isMapLoaded: state.map.isMapLoaded,
         location: state.map.location,
-        results: state.search.results
+        results: state.search.results,
+        query: state.search.query
     }
 }
 
