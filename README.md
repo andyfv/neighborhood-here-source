@@ -6,6 +6,7 @@
 * [How to run it](#how-to-run-it)
 * [How to use it](#how-to-use-it)
 * [Dependencies](#dependencies)
+* [TODO](#todo)
 
 ## About
 
@@ -66,3 +67,13 @@ On the page you will see three main elements:
 * react-redux
 * HereMapsAPI
 * PropTypes
+
+
+## TODO
+
+
+* If HTTP 503 error is given - send another request<br>
+        Sadly the HTTP 503 Error for ```Places API``` didn't go away by reducing the number of requests send.<br>
+        As per [Here Maps Places API Documentation](https://developer.here.com/documentation/places/topics/http-status-codes.html) :
+
+        503 Service Unavailable	Indicates that the service is temporarily unavailable due to system overload or maintenance.
